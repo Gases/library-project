@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+    <title>Library project</title>
+</head>
+<body>
+    <header>
+        <h1>Bookshelf v1.0</h1>
+    </header>
+    <main>
+        <div class="overlay">
+            
+        </div>
+        <div id="modal" class="disappear">
+            <header class="modal-header">
+                <h2>Add a new book</h2>
+            </header>
+            <form id="new-book">
+                <div class="form-input">
+                    <legend>Book title:</legend>
+                    <input type="text" id="title" required />
+                </div>
+                <div class="form-input">
+                    <legend>Book's author:</legend>
+                    <input type="text" id="author" required />
+                </div>
+                <div class="form-input">
+                    <legend>Year published:</legend>
+                    <input type="number" id="year" required />
+                </div>
+                <div class="form-input">
+                    <legend>Pages: </legend>
+                    <input type="number" id="pages" required />
+                </div>
+                <div class="form-input">
+                    <label>Have you read it?</label>
+                    <input type="checkbox" id="read" />
+                </div>
+            </form>
+            <footer>
+                <p></p>
+            </footer>
+        </div>
+        <div class="container">
+            <button id="add-new-book">+</button>
+        </div>
+    </main>
+</body>
+</html>
