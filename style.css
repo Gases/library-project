@@ -1,0 +1,96 @@
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    background-color: black;
+    color: white;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin: 0;
+    overscroll-behavior: none;
+}
+
+header {
+    text-align: center;
+    margin: 24px;
+}
+
+form {
+    background-color: white;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 8px;
+}
+
+#add-new-book {
+    background-color: rgb(114, 70, 184);
+    color: black;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 0 50px 50px 0;
+    cursor: pointer;
+    width: 48px;
+    height: 48px;
+    font-size: 36px;
+    border: none;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+#modal {
+    width: 300px;
+    background-color: rgb(114, 70, 184);
+    border-radius: 5px;
+    box-shadow: 0px 0px 25px 2px #757575;
+    position: fixed;
+    top: 30%;
+    left: 42%;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.form-input {
+    margin-bottom: 8px;
+}
+
+.rotate {
+    transform: rotate(45deg);
+    transition: 0.3s;
+}
+
+.antirotate {
+    transform: rotate(0deg);
+    transition: 0.3s;
+}
+
+.disappear {
+    transform: scale(0);
+    transition: 0.3s;
+}
+
+.appear {
+    transform: scale(1);
+    transition: 0.3s;
+}
+
+.overlay {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    z-index: 1;
+}
+
+.active {
+    display: block;
+}
