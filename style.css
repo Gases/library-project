@@ -30,6 +30,8 @@ form {
 
 footer {
     text-align: center;
+    background-color:rgb(114, 70, 184);
+    width: 100%;
 }
 
 #add-new-book {
@@ -49,6 +51,7 @@ footer {
 }
 
 #submit-book {
+    text-align: center;
     font-family: inherit;
     font-size: inherit;
     border: none;
@@ -142,5 +145,32 @@ footer {
 }
 
 .card-footer {
-    height: 10px;
+    color: white;
+}
+
+.delete-button {
+    font-size: 16px;
+    margin: 4px;
+    border: none;
+    background-color:rgb(114, 70, 184);
+    color: white;
+    cursor: pointer;
+}
+
+.toggle-read {
+    color: white;
+    font-family: inherit;
+    font-size: 16px;
+    margin: 4px;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.read {
+    background-color: rgb(20, 80, 20);
+}
+
+.not-read {
+    background-color: rgb(80, 20, 20);
 }
