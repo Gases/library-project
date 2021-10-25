@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css" />
+    <script src="https://kit.fontawesome.com/3c3d1ba15e.js" crossorigin="anonymous"></script>
     <script src="script.js" defer></script>
     <title>Library project</title>
 </head>
@@ -20,7 +21,7 @@
             <header class="modal-header">
                 <h2>Add a new book</h2>
             </header>
-            <form id="new-book">
+            <form id="new-book" onsubmit="return ">
                 <div class="form-input">
                     <legend>Book title:</legend>
                     <input type="text" id="title" name="title" required />
@@ -41,14 +42,14 @@
                     <label>Have you read it?</label>
                     <input type="checkbox" id="read" name="read" />
                 </div>
+                <footer>
+                    <button id="submit-book" type="submit">Submit</button>
+                </footer>
             </form>
-            <footer>
-                <button id="submit-book">Submit</button>
-            </footer>
         </div>
         <div class="container">
-            <button id="add-new-book">+</button>
         </div>
+        <button id="add-new-book">+</button>
     </main>
 </body>
 </html>
