@@ -5,6 +5,8 @@ let modal = document.querySelector('#modal');
 let overlay = document.querySelector('.overlay');
 let submitBook = document.querySelector('#submit-book');
 let container = document.querySelector('.container');
+let form = document.querySelector('form');
+
 
 newBook.addEventListener('click', addNewBook);
 overlay.addEventListener('click', closeModal);
@@ -24,8 +26,8 @@ function closeModal() {
     overlay.classList.remove('active');
     newBook.classList.remove('rotate');
     newBook.classList.add('antirotate');
-
-    input.forEach(input => input.textContent = '');
+    
+    form.reset();
 }
 
 function bookDetails() {
@@ -37,14 +39,14 @@ function bookDetails() {
     
     let book = new Book(bookTitle.value, bookAuthor.value, bookYear.value, bookPages.value, bookRead.checked);
     
-    createBook(book);
+    if (form.checkValidity()) createBook(book);
 }
 
 function createBook(book) {
     let bookCard = document.createElement('div');
     bookCard.classList.add('card-content');
     container.appendChild(bookCard);
-
+    
     let header = document.createElement('header');
     header.classList.add('title');
     bookCard.appendChild(header);
@@ -52,7 +54,7 @@ function createBook(book) {
     let h1 = document.createElement('h1');
     h1.textContent = book.title;
     header.appendChild(h1);
-
+    
     let details = document.createElement('div');
     details.classList.add('details');
     bookCard.appendChild(details);
@@ -63,22 +65,49 @@ function createBook(book) {
     parYear.textContent = `Year: ${book.year}`;
     let parPages = document.createElement('p');
     parPages.textContent = `Pages: ${book.pages}`;
-    let parRead = document.createElement('p');
-    if (book.read) parRead.textContent = `Read it: Yep`;
-    else parRead.textContent = `Read it: Nope`;
-
+    let btnRead = document.createElement('button');
+    btnRead.classList.add('toggle-read');
+    if (book.read) {
+        btnRead.classList.add('read');
+        btnRead.textContent = 'Read'
+    }
+    else {
+        btnRead.classList.add('not-read');
+        btnRead.textContent = 'Not read';
+    }
+    
     let footer = document.createElement('footer');
     footer.classList.add('card-footer')
-    let par = document.createElement('p');
-    footer.appendChild(parAuthor);
-    bookCard.appendChild(par);
-
+    footer.innerHTML = '<button class="delete-button"><i class="fas fa-trash"></i></button>';
+    bookCard.appendChild(footer);
+    
     details.appendChild(parAuthor);
     details.appendChild(parYear);
     details.appendChild(parPages);
-    details.appendChild(parRead);
-
+    details.appendChild(btnRead);
+    
+    let deleteButton = document.querySelectorAll('.delete-button');
+    deleteButton.forEach(button => button.addEventListener('click', deleteCard));
+    let toggleRead = document.querySelectorAll('.toggle-read');
+    toggleRead.forEach(button => button.addEventListener('click',toggleBookRead));
     closeModal();
+}
+
+function deleteCard(e) {
+    e.target.parentNode.parentNode.parentNode.remove();
+}
+
+function toggleBookRead(e) {
+    if (e.target.classList.contains('read')) {
+        e.target.classList.remove('read');
+        e.target.classList.add('not-read');
+        e.target.textContent = 'Not read';
+    }
+    else {
+        e.target.classList.remove('not-read');
+        e.target.classList.add('read');
+        e.target.textContent = 'Read';
+    }
 }
 
 function Book(title, author, year, pages, read) {
