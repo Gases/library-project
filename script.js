@@ -1,121 +1,145 @@
-var input = document.querySelectorAll('input');
+var myLibrary = [];
 
-let newBook = document.querySelector('#add-new-book');
-let modal = document.querySelector('#modal');
+let library = document.getElementById('container');
+let addBookButton = document.getElementById('add-new-book');
+let form = document.getElementById('new-book');
+let modal = document.getElementById('modal');
 let overlay = document.querySelector('.overlay');
-let submitBook = document.querySelector('#submit-book');
-let container = document.querySelector('.container');
-let form = document.querySelector('form');
 
+addBookButton.addEventListener('click', toggleModal);
+overlay.addEventListener('click', toggleModal);
 
-newBook.addEventListener('click', addNewBook);
-overlay.addEventListener('click', closeModal);
-submitBook.addEventListener('click', bookDetails);
+const addBookToLibrary = (e) => {
+  e.preventDefault();
+  let bookData = [];
+  let input = document.querySelectorAll('input');
 
-function addNewBook() {
-    modal.classList.remove('disappear');
-    modal.classList.add('appear');
-    newBook.classList.remove('antirotate');
-    newBook.classList.add('rotate');
-    overlay.classList.add('active');
+  for (let i = 0; i < input.length; i++) {
+    if (input[i].type === "checkbox") {
+      bookData.push(input[i].checked);
+    } else {
+      bookData.push(input[i].value);
+    }
+  }
+
+  const newBook = new Book(...bookData);
+  myLibrary.push(newBook.bookCardContent());
+  displayLibrary();
+  toggleModal();
 }
 
-function closeModal() {
-    modal.classList.remove('appear');
-    modal.classList.add('disappear');
-    overlay.classList.remove('active');
-    newBook.classList.remove('rotate');
-    newBook.classList.add('antirotate');
-    
-    form.reset();
-}
-
-function bookDetails() {
-    let bookTitle = document.querySelector('[name="title"]');
-    let bookAuthor = document.querySelector('[name="author"]');
-    let bookYear = document.querySelector('[name="year"]');
-    let bookPages = document.querySelector('[name="pages"]');
-    let bookRead = document.querySelector('[name="read"]');
-    
-    let book = new Book(bookTitle.value, bookAuthor.value, bookYear.value, bookPages.value, bookRead.checked);
-    
-    if (form.checkValidity()) createBook(book);
-}
-
-function createBook(book) {
+function displayLibrary() {
+  form.reset();
+  library.innerHTML = '';
+  
+  myLibrary.forEach(function(book) {
     let bookCard = document.createElement('div');
-    bookCard.classList.add('card-content');
-    container.appendChild(bookCard);
-    
-    let header = document.createElement('header');
-    header.classList.add('title');
-    bookCard.appendChild(header);
-    
-    let h1 = document.createElement('h1');
-    h1.textContent = book.title;
-    header.appendChild(h1);
-    
-    let details = document.createElement('div');
-    details.classList.add('details');
-    bookCard.appendChild(details);
-    
-    let parAuthor = document.createElement('p');
-    parAuthor.textContent = `Author: ${book.author}`;
-    let parYear = document.createElement('p');
-    parYear.textContent = `Year: ${book.year}`;
-    let parPages = document.createElement('p');
-    parPages.textContent = `Pages: ${book.pages}`;
-    let btnRead = document.createElement('button');
-    btnRead.classList.add('toggle-read');
-    if (book.read) {
-        btnRead.classList.add('read');
-        btnRead.textContent = 'Read'
-    }
-    else {
-        btnRead.classList.add('not-read');
-        btnRead.textContent = 'Not read';
-    }
-    
+    let header = document.createElement('h1')
+    let bookDetails = document.createElement('div');
+    let readStatus = document.createElement('button')
     let footer = document.createElement('footer');
+    
+    
+    bookCard.classList.add('card');
+    library.appendChild(bookCard);
+    
+    header.classList.add('title');
+    header.textContent = book.title;
+    
+    bookDetails.classList.add('content');
+    for (let [key, detail] of Object.entries(book.details)) {
+      let par = document.createElement('p');
+      par.textContent = '';
+      par.textContent = detail;
+      bookDetails.appendChild(par);
+    }
+  
+    readStatus.classList.add('read-status');
+    if (book.read) {
+      readStatus.classList.add('read');
+      readStatus.textContent = 'Read';
+    } else {
+      readStatus.classList.add('not-read');
+      readStatus.textContent = 'Not read';
+    }
+    readStatus.addEventListener('click', toggleRead);
+    bookDetails.appendChild(readStatus);
+
     footer.classList.add('card-footer')
     footer.innerHTML = '<button class="delete-button"><i class="fas fa-trash"></i></button>';
-    bookCard.appendChild(footer);
-    
-    details.appendChild(parAuthor);
-    details.appendChild(parYear);
-    details.appendChild(parPages);
-    details.appendChild(btnRead);
-    
-    let deleteButton = document.querySelectorAll('.delete-button');
-    deleteButton.forEach(button => button.addEventListener('click', deleteCard));
-    let toggleRead = document.querySelectorAll('.toggle-read');
-    toggleRead.forEach(button => button.addEventListener('click',toggleBookRead));
-    closeModal();
+    bookCard.append(header,bookDetails,footer);
+
+    let removeBook = document.querySelectorAll('.delete-button');
+    removeBook.forEach(book => book.addEventListener('click', removeBookCard));
+  });
+};
+
+function removeBookCard(e) {
+  myLibrary = myLibrary.filter(books => books.title !== e.target.parentNode.parentNode.parentNode.firstChild.innerText);
+  displayLibrary();
 }
 
-function deleteCard(e) {
-    e.target.parentNode.parentNode.parentNode.remove();
+function toggleRead(e) {
+  this.textContent = '';
+  if (this.classList.contains('read')) {
+    this.classList.remove('read');
+    this.classList.add('not-read');
+    this.textContent = 'Not read';
+
+    myLibrary.forEach(function(book) {
+      if(book.title === e.target.parentNode.parentNode.firstChild.innerText) book.read = false;
+    });  
+
+  } else {
+    this.classList.remove('not-read');
+    this.classList.add('read');
+    this.textContent = 'Read';
+
+    myLibrary.forEach(function(book) {
+      if(book.title === e.target.parentNode.parentNode.firstChild.innerText) book.read = true;
+    });
+
+  }
+  
+  displayLibrary();
 }
 
-function toggleBookRead(e) {
-    if (e.target.classList.contains('read')) {
-        e.target.classList.remove('read');
-        e.target.classList.add('not-read');
-        e.target.textContent = 'Not read';
-    }
-    else {
-        e.target.classList.remove('not-read');
-        e.target.classList.add('read');
-        e.target.textContent = 'Read';
-    }
+function toggleModal() {
+  if (modal.classList.contains('disappear')) {
+    modal.classList.remove('disappear');
+    modal.classList.add('appear');
+    addBookButton.classList.remove('antirotate');
+    addBookButton.classList.add('rotate');
+    overlay.classList.add('active');
+  } else {
+    modal.classList.remove('appear');
+    modal.classList.add('disappear');
+    addBookButton.classList.remove('rotate');
+    addBookButton.classList.add('antirotate');
+    overlay.classList.remove('active');
+  }
 }
 
-function Book(title, author, year, pages, read) {
+form.onsubmit = addBookToLibrary;
+
+class Book {
+  constructor(title, author, year, pages, read) {
     this.title = title;
     this.author = author;
     this.year = year;
     this.pages = pages;
     this.read = read;
+  }
+
+  bookCardContent = function() {
+    return {
+      title: this.title.toUpperCase(),
+      details: {
+      author: `Author:    ${this.author}`,
+      year: `Year:    ${this.year}`,
+      pages: `Pages:    ${this.pages}`,
+      },
+      read: this.read
+    }
+  }
 }
-
-
