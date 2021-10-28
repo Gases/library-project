@@ -11,7 +11,7 @@
 </head>
 <body>
     <header>
-        <h1>Bookshelf v1.0</h1>
+        <h1>Bookshelf v1.1</h1>
     </header>
     <main>
         <div class="overlay">
@@ -21,7 +21,7 @@
             <header class="modal-header">
                 <h2>Add a new book</h2>
             </header>
-            <form id="new-book" onsubmit="return ">
+            <form id="new-book">
                 <div class="form-input">
                     <legend>Book title:</legend>
                     <input type="text" id="title" name="title" required />
@@ -47,9 +47,9 @@
                 </footer>
             </form>
         </div>
-        <div class="container">
+        <div id="container">
         </div>
-        <button id="add-new-book">+</button>
+        <button id="add-new-book" class="antirotate">+</button>
     </main>
 </body>
 </html>
