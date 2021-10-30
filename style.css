@@ -1,7 +1,7 @@
 html {
-  box-sizing: border-box;
-}
-
+    box-sizing: border-box;
+  }
+  
 *, *:before, *:after {
     box-sizing: inherit;
 }
@@ -14,7 +14,8 @@ body {
     overscroll-behavior: none;
 }
 
-header {
+header,
+.title {
     text-align: center;
     margin: 24px;
 }
@@ -74,28 +75,27 @@ footer {
     overflow: hidden;
 }
 
-.form-input {
-    margin-bottom: 8px;
+#container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 32px 64px;
+    gap: 36px;
 }
 
-.rotate {
-    transform: rotate(45deg);
-    transition: 0.3s;
+.card {
+    width: 300px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 25px 2px #757575;
+    padding: 0;
+    background-color:rgb(114, 70, 184);
+    overflow: hidden;
 }
 
-.antirotate {
-    transform: rotate(0deg);
-    transition: 0.3s;
-}
-
-.disappear {
-    transform: scale(0);
-    transition: 0.3s;
-}
-
-.appear {
-    transform: scale(1);
-    transition: 0.3s;
+.content {
+    color: black;
+    background-color: white;
+    padding: 8px 32px;
+    width: 100%;
 }
 
 .overlay {
@@ -109,55 +109,16 @@ footer {
     z-index: 1;
 }
 
-.active {
-    display: block;
-}
-
-.container {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 32px 64px;
-    gap: 36px;
-}
-
-.card-content {
-    width: 300px;
-    border-radius: 5px;
-    box-shadow: 0px 0px 25px 2px #757575;
-    padding: 0;
-    background-color:rgb(114, 70, 184);
-    overflow: hidden;
-}
-
-.title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    height: 30px;
-}
-
-.details {
-    color: black;
-    background-color: white;
-    padding: 8px 32px;
-    width: 100%;
-}
-
-.card-footer {
-    color: white;
-}
-
 .delete-button {
-    font-size: 16px;
-    margin: 4px;
-    border: none;
-    background-color:rgb(114, 70, 184);
-    color: white;
     cursor: pointer;
+    padding: 4px;
+    font-size: 18px;
+    border: none;
+    background-color: rgba(0,0,0,0);
+    color: white;
 }
 
-.toggle-read {
+.read-status {
     color: white;
     font-family: inherit;
     font-size: 16px;
@@ -173,4 +134,28 @@ footer {
 
 .not-read {
     background-color: rgb(80, 20, 20);
+}
+
+.active {
+    display: block;
+}
+
+.disappear {
+    transform: scale(0);
+    transition: 0.3s;
+}
+
+.appear {
+    transform: scale(1);
+    transition: 0.3s;
+}
+
+.rotate {
+    transform: rotate(45deg);
+    transition: 0.3s;
+}
+
+.antirotate {
+    transform: rotate(0deg);
+    transition: 0.3s;
 }
